@@ -17,6 +17,7 @@ var (
 	createTableCommand        = kingpin.Command("create-table", "Create DynamoDB Table")
 	device                    = kingpin.Flag("device", "Device to encrypt").Short('d').String()
 	computerContext           = kingpin.Flag("computer-context", "Supply Computer Context up-front").Short('c').String()
+	deviceName                = kingpin.Flag("device-name", "Supply device name up-front").Short('n').String()
 )
 
 func main() {

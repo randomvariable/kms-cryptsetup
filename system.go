@@ -52,13 +52,17 @@ func ComputerContext() string {
 }
 
 func DiskContext(device string) string {
-	sysfs := fmt.Sprintf("/sys/block/%s/device/wwid", RealDiskDevice(device))
-	blockInfo, err := ioutil.ReadFile(sysfs)
-	if err != nil {
-		log.Fatal(err)
+	if *deviceName != "" {
+		return Contextify(*deviceName)
+	} else {
+		sysfs := fmt.Sprintf("/sys/block/%s/device/wwid", RealDiskDevice(device))
+		blockInfo, err := ioutil.ReadFile(sysfs)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fields := strings.Fields(string(blockInfo))
+		return Contextify(strings.Join(fields, ""))
 	}
-	fields := strings.Fields(string(blockInfo))
-	return Contextify(strings.Join(fields, ""))
 }
 
 func EncryptedDM() string {
